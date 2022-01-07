@@ -1,7 +1,426 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans|Lato:100,300">
+    <link rel="stylesheet" href="./fontawesome/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root{
+            font-size:4px;
+            font-family: 'Montserrat';
+            cursor:none;
+            color: rgb(97, 97, 97);
+        }
+        @media screen and (min-width:768px) {
+            :root{
+                font-size: 6px;
+            }
+        }
+        @media screen and (min-width:1440px) {
+            :root{
+                font-size:7px; 
+            }
+        }
+        @media screen and (min-width:1920px) {
+            :root{
+               font-size:10px; 
+            }
+        }
+        #cursor{
+            height:10px;
+            width:10px;
+            border-radius: 100%;
+            background-color: white;
+            position:fixed;
+            top:0;
+            left:0;
+            z-index: 200;
+            mix-blend-mode: difference;
+            transition: height 0.3s, width 0.3s, transform 0.3s;
+            pointer-events: none;
+            transform: translate(-5px, -5px);
+        }
+        body{
+            position: relative;
+            overflow:hidden;
+        }
+        /* width */
+        ::-webkit-scrollbar {
+        width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0);
+        
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+        background: rgba(255, 255, 255, 0.295);
+        border: solid 3px transparent;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: rgb(255, 255, 255);
+        }
+        
+        *{
+            margin:0;
+            padding:0;
+            
+        }
+        h1{
+            font-size: 9rem;
+            font-weight: normal;
+        }
+        h2{
+            font-size:6rem;
+            font-weight: normal;
+            z-index: 2;
+            background-color: transparent;
+        }
+        p{
+            font-size: 2rem;
+            line-height: 3rem;
+        }
+        a{
+            font-size: 2rem;
+            text-decoration: none;
+            color:rgb(80, 80, 80);
+        }
+        header{
+            font-family: 'Lato';
+            position: absolute;
+            color:white;
+            z-index: 9;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        nav{
+            position:fixed;
+            top:8rem;
+            right:6rem;
+            height: 50vh;
+            width: 10rem;
+            padding: 4rem 0;
+            z-index: 10;
+            border-left: black 1px solid;
+            transition: height 0.5s, opacity 0.5s;
+            z-index:9;
+        }
+        nav ul{
+            display: flex;
+           height: 100%;
+           justify-content: space-between;
+           align-items: center;
+            flex-direction: column;
+        }
+        nav li{
+            font-size: 2rem;
+           font-weight: 100;
+            text-decoration: none;
+            list-style-type: none;
+            color:white;
+            transform: rotate(90deg);
+        }
+        li a{
+            text-decoration: none;
+            color: white;
+            cursor: none;
+            mix-blend-mode: difference;
+
+        }
+        main{
+            overflow-x: hidden;
+            overflow-y: overlay;
+            height: 105vh;
+            scroll-snap-type: y mandatory;
+           
+            scroll-behavior: smooth;
+            
+
+        }
+
+        main > section{
+            scroll-snap-align: end;
+            position: relative;
+            height: 105vh;
+            width: 100%;
+            background-color:white;
+            
+        }
+        #sect1{
+            
+            background-color: black;
+            color:white;
+            z-index: 5;
+            overflow:hidden;
+        }
+        #sect1 .content{
+            position:absolute;
+            top:45vh;
+            left: 15vw;
+        }
+        #sect1 .content p{
+            text-align: end;
+            padding-right: 6rem;
+        }
+        #sect2{
+            z-index: 5;
+            height: 100vh;
+            background-color: rgb(245, 241, 234);
+        }
+        #sect2 .content{
+            width: 40vw;
+            position: absolute;
+            top:20vh;
+            left: 15vw;
+        }
+        
+        #sect3{
+            background-color: black;
+            color:white;
+            display:flex;
+        }
+        #sect3 .left{
+            position:relative;
+            width: 40%;
+        }
+        #sect3 .left h2{
+            position:absolute;
+            top:40vh;
+            left:20rem;
+        }
+        #sect3 .right{
+            
+            width: 60%;
+            position:relative;
+        }
+        #carousel{
+            
+        }
+        .carousel-page{
+           
+        }
+       
+        .menu{
+            height: 4rem;
+            width:4rem;
+            background-color:white;
+            position: fixed;
+            right:8rem;
+            top:8rem;
+            opacity: 0;
+            transform:rotate(15deg);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        .footer{
+            height:20vh;
+            background-color: white;
+            
+        }
+        
+        h3{
+            font-size: 4rem;
+            font-weight: normal;
+            margin-bottom: 2rem;
+        }
+        i{
+            font-size:4rem;
+        }
+    </style>
+</head>
+<div id="cursor">
+   
+</div>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    
+    <div class="menu"></div>
+    <nav>
+        <ul>
+            <li><a href="#works">Works</a></li>
+            <li><a href="#sect2">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <header>
+        <p>JZ</p>
+
+    </header>
+    
+    <main>
+        <div id="preview">
+            <div id='preview-content'>
+                <div id="close-preview"></div>
+                <div id="preview-img">
+                    <img src="./img/artjeanius.jpg" alt="">
+
+                </div>
+            </div>
+        </div>
+        <section id='sect1'>
+            <div class="content">
+                <p>an aspiring full-stack web developer</p>
+                <h1>Hello, I am Jun Ze</h1>
+                
+            </div>
+            <div style="
+            background-color: white;
+            width: 115vw;
+            height: 400px;
+            position: absolute;
+            transform: rotate(-10deg);
+            top:90%;
+            left:-5vw;
+            "></div>
+        </section>
+        
+        <section id="works">
+           
+        </div>
+            <div id='works-title'><h2>Recent Works</h2></div>
+            
+            <div id="carousel">
+                <div class="carousel-pages">
+                    <div class="carousel-page" id="page-1">
+                        <div class="work-image">
+                            <img src="./Web 1920 – 1.png" alt="">
+                        </div>
+                        <div class="content">
+                            <h3>ARTJEANIUS website design</h3>
+                            <p>Freelance project for a watercolour artist by my friend and I</p>
+                        </div>
+                        <div style="
+                background-color:rgba(218, 211, 188, 0.281);
+                height:120vh;
+                width: 150px;
+                position:absolute;
+                z-index: 0;
+                display: block;
+                transform: rotate(10deg) translate(3vw,-95vh);
+                ">
+                
+                </div>
+               
+                    </div>
+                    <div class="carousel-page" id="page-2">
+                        <div class="work-image">
+                            <img src="./img/courses.png" alt="">
+                        </div>
+                        <div class="content">
+                            <h3>Course website</h3>
+                            <p>Personal project. Learnt the basics of backend and api development using the Laravel framework. Also touched on a little bit of user authenication</p>
+                        </div>
+    
+                    </div>
+                    
+                    
+                </div>
+                    <div style="
+                    background-color: rgb(245, 241, 234);
+                    height: 50rem;
+                    width: 110vw;
+                    position:absolute;
+                    top:100%;
+                    left:-5vw;
+                    transform: rotate(-10deg);
+                    z-index: -1;
+                ">
+                </div>
+                    
+                    
+                </div>
+               
+            <div class="carousel-nav">
+                <div id="left-arrow">
+                    <div class="hover-area"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="100%" viewBox="0 0 81.757 31.542">
+                        <path id="Path_3" data-name="Path 3" d="M1407.2,1970.057h-74.514l26.42-26.421" transform="translate(-1325.44 -1941.516)" fill="none" stroke="#707070" stroke-width="6"/>
+                      </svg>
+                      
+                      
+                </div>
+                <div id="carousel-pagination">
+                    
+                    
+                                                                          
+                </div>
+                <div id="right-arrow">
+                    <div class="hover-area"></div>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="100%" viewBox="0 0 81.757 31.542">
+                        <path id="Path_1" data-name="Path 1" d="M1332.683,1970.057H1407.2l-26.42-26.421" transform="translate(-1332.683 -1941.516)" fill="none" stroke="#707070" stroke-width="6"/>
+                      </svg>
+                      
+                      
+                      
+                </div>
+            </div>
+            
+            
+        
+            </div>
+        </section>
+        </div>
+        <section id="sect2">
+            <div class="content">
+                <h2>About Me</h2>
+                <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius eu nisi convallis accumsan. Pellentesque vel sagittis augue. Sed sodales, nibh id ultrices luctus, libero risus sodales tellus, commodo ultrices mi mi eget velit. Ut vitae ultricies metus. Nam sed ligula et orci blandit sollicitudin et vel est. Praesent non ipsum ut leo pulvinar volutpat ac in tellus. Sed luctus diam sit amet rutrum viverra. Maecenas eget erat arcu. Quisque gravida magna sit amet neque lacinia, ac mattis orci imperdiet. Mauris tincidunt sed libero eget malesuada.</p> -->
+                <p>
+                    Ong Jun Ze holds a diploma in Infocomm and Media Engineering from Nanyang Polytechnic.
+                    During his polytechnic days, he found interest in web development and started learning by himself continuing what the courses have taught. In his 2nd year, he participated in the World Skills Singapore competition in Web Technologies and clinched first place.
+                    When not designing or building websites, Jun Ze enjoys playing the piano and plays in a symphonic ochestra as a bass clarinetist, and going birding on the weekends. 
+                </p>
+            </div>
+        </section>
+        <!-- <section id="sect3">
+            <div class="left">
+                <h2>My works</h2>
+
+            </div>
+            <div class="right">
+                <div id="carousel">
+                    <div id="carousel-1" class="carousel-page"></div>
+                    <div id="carousel-2" class="carousel-page"></div>
+                    <div id="carousel-3" class="carousel-page"></div>
+                </div>
+            </div>
+        </section> -->
+        <section id="contact">
+            <div class="contact-links">
+                <h2>Get in touch</h2>
+                <div>
+                    <div class="contact-link">
+                        <i class="far fa-envelope"></i>
+                        <a href="mailto:junze1300@gmail.com">junze1300@gmail.com</a>
+                    </div>
+                    <div class="contact-link">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+6598372868">+65 9837 2868</a>
+                    </div>
+                    <div class="contact-link">
+                        <i class="fab fa-instagram"></i>
+                        <a href="https://instagram.com/j_u_n_z_e">@j_u_n_z_e</a>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+    </main>
+    <script src="./jquery-3.6.0.min.js"></script>
+    <script src="./index.js"></script>
 </body>
 </html>
+
