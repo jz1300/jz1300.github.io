@@ -40,10 +40,11 @@ $('main').scroll(e=>{
     if($('main').scrollTop()>700){
         $('.menu').css('background-color', 'black')
         $('nav ul li a').css('color', 'black')
+        $('nav ul').css('background-color','white')
     }
     else{
         $('nav ul li a').css('color', 'white')
-
+        $('nav ul').css('background-color','transparent')
         $('.menu').css('background-color', 'white')
 
     }
