@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            height: 90vh;
+            filter: brightness(1.2);
+            position:absolute;
+            right: 1rem;
+            top:1rem;
+
+        }
+        .bird-content{
+            width: 40vw;
+        }
+    </style>
+</head>
+<body>
+    <nav>TEst</nav>
+    <div id="main">
+        <router-view></router-view>
+    </div>
+    <script src="./const.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var birds = []
+        if(!sessionStorage.birds){
+            axios.get(url)
+            .then(response=>{
+                let data = response.data.split('\r\n')
+                for(let i =1; i<data.length;i++){
+                    data[i] = data[i].split('\t')
+                    birds.push({
+                        index:data[i][0],
+                        common_name:data[i][1],
+                        scientific_name:data[i][2],
+                        family:data[i][3],
+                        habitat:data[i][4],
+                        abundance: data[i][5],
+                        status:data[i][6],
+                        description:data[i][7],
+                        diet:data[i][8],
+                        image:data[i][9],
+                    })
+                }
+                console.log(birds);
+                sessionStorage.birds = JSON.stringify(birds)
+            })
+        }
+        else{
+            birds = JSON.parse(sessionStorage.birds)
+        }
+       
+        
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+
+    <script src="./mainComponent.js"></script>
+    <script src="./birdComponent.js"></script>
+    <script>
+        let mainComp = {template:'<app-main></app-main>'}
+        let birdComp = {template:'<app-bird></app-bird>'}
+        
+
+        const routes = [
+            {path:'/', component:mainComp},
+            {path:'/birds/:id', component:birdComp, props:true},
+            
+        ]
+        const router = new VueRouter({routes});
+
+        new Vue({
+            el:"#main",
+            router
+        })
+    </script>
+</body>
+</html>
