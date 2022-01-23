@@ -16,7 +16,7 @@ Vue.component('app-bird',{
     
     data(){
         return {
-           
+            id:this.$route.params.id,
             bird:{}
         }
     },
