@@ -5,24 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Gaegu">
+    <link rel="stylesheet" href="./style.css">
     <style>
-        img{
-            height: 90vh;
-            filter: brightness(1.2);
+        
+        /* body::before{
+            height: 100%;
+            width: 100%;
+            content: '';
             position:absolute;
-            right: 1rem;
-            top:1rem;
-
-        }
-        .bird-content{
-            width: 40vw;
-        }
+            top:0;
+            left:0;
+            background-color: rgba(97, 75, 43, 0.123);
+            z-index: -1;
+        } */
     </style>
 </head>
 <body>
-    <nav>TEst</nav>
+    <nav>
+        <ul>
+            <li><a href="./">Home</a></li>
+            <li><a href="./#/birds">Birds</a></li>
+        </ul>
+    </nav>
     <div id="main">
-        <router-view></router-view>
+        <router-view  :key="$route.fullPath"></router-view>
     </div>
     <script src="./const.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -45,6 +53,7 @@
                         description:data[i][7],
                         diet:data[i][8],
                         image:data[i][9],
+                        order:data[i][10],
                     })
                 }
                 console.log(birds);
@@ -62,13 +71,16 @@
 
     <script src="./mainComponent.js"></script>
     <script src="./birdComponent.js"></script>
+    <script src="./birdPanelComponent.js"></script>
     <script>
         let mainComp = {template:'<app-main></app-main>'}
         let birdComp = {template:'<app-bird></app-bird>'}
+        let birdPanelComp = {template:'<app-bird-panel></app-bird-panel>'}
         
 
         const routes = [
             {path:'/', component:mainComp},
+            {path:'/birds', component:birdPanelComp, props:true},
             {path:'/birds/:id', component:birdComp, props:true},
             
         ]
