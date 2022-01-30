@@ -24,7 +24,6 @@ Vue.component('app-bird',{
     
     data(){
         return {
-            
             bird:{}
         }
     },
