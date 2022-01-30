@@ -3,10 +3,16 @@ Vue.component('app-main', {
     `
     <div>
         <h1>TEST</h1>
+        
     </div>
     `,
+    data(){
+        return {
+            birds
+        }
+    },
     mounted(){
-      
+      console.log(this.birds);
         
        
         
