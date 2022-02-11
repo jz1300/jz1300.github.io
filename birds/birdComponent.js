@@ -14,7 +14,7 @@ Vue.component('app-bird',{
             <div class="img-container">
             <div class="tape tape-top"></div>
             <div class="tape tape-bottom"></div>
-            <img :src="'images/'+bird.image">
+            <img :src="[bird.image=='default.jpg' ? './images/'+bird.image : bird.image]">
             </div>
         </div>
         
@@ -30,7 +30,8 @@ Vue.component('app-bird',{
     },
     mounted(){
         console.log(this.$route.params.id);
-        let birds = JSON.parse(sessionStorage.birds)
+        
+        //let birds = JSON.parse(sessionStorage.birds)
         this.bird = birds.find(d=>{
             
             return d.index == this.$route.params.id
