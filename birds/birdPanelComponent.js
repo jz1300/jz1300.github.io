@@ -1,5 +1,6 @@
 Vue.component('app-bird-panel', {
     template:`
+  
     <div class="birds-panel">
         <div class="birds-panel-header">
         <h1>Birds of singapore</h1>
@@ -11,9 +12,11 @@ Vue.component('app-bird-panel', {
             
             <div class="birds-grid">
                 <div class="card" v-for="b in birds" v-if="b" @click="location.href='./#/birds/'+b.index">
-                    <img :src="'./images/'+b.image">
+                
+                    <img :src="[b.image=='default.jpg' ? './images/'+b.image : b.image]">
                     <p>{{b.scientific_name}}</p>
                     <h2>{{b.common_name}}</h2>
+               
                 </div>
             </div>
             <div class="bird-families">
@@ -86,13 +89,18 @@ Vue.component('app-bird-panel', {
         let o = new Set
         let orders = []
         let families = []
+        console.log(birds);
+        for(let i =0;i<birds.length;i++){
+            console.log(birds[i]);
+        }
         birds.forEach(b=>{
+            console.log(b)
             f.add(b.family+","+b.order)
             o.add(b.order)
-
             
            
         })
+       
         families = Array.from(f)
         families = families.map(f=>{
             return {f:f.split(',')[0],clicked:false, o:f.split(',')[1]};
