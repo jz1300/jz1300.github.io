@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Gaegu">
+    href="https://fonts.googleapis.com/css?family=Gaegu|Josefin Sans">
     <link rel="stylesheet" href="./style.css">
     <style>
         
@@ -24,9 +24,11 @@
 </head>
 <body>
     <nav>
+        <h3>Birds of singapore</h3>
         <ul>
             <li><a href="./">Home</a></li>
             <li><a href="./#/birds">Birds</a></li>
+            <li><a href="./about.html">About</a></li>
         </ul>
     </nav>
     <div id="main">
@@ -35,28 +37,45 @@
     <script src="./const.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        let habitats = []
         const birds = []
         axios.get(url)
         .then(response=>{
             let data = response.data.split('\r\n')
             for(let i =1; i<data.length;i++){
                 data[i] = data[i].split('\t')
+          
                 birds.push({
                     index:data[i][0],
                     common_name:data[i][1],
                     scientific_name:data[i][2],
                     family:data[i][3],
-                    habitat:data[i][4],
+                    habitat_desc:data[i][4],
                     abundance: data[i][5],
                     status:data[i][6],
                     description:data[i][7],
                     diet:data[i][8],
                     image:data[i][9],
                     order:data[i][10],
+                    habitat:data[i][11].split(',')
                 })
             }
+            let s = new Set;
+            for(let i = 0; i<birds.length;i++){
+                
+                birds[i].habitat.forEach(h=>{
+                    s.add(h)
+                })
+    
+            }
+            habitats = Array.from(s)
+            console.log(birds);
             init();
         });
+
+        
+        
+     
         // if(!sessionStorage.birds){
         //         console.log(birds);
         //         sessionStorage.birds = JSON.stringify(birds)

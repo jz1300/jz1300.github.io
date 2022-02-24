@@ -6,7 +6,7 @@ Vue.component('app-bird',{
             
                 <h1>{{bird.common_name}}</h1>
                 <h5>{{bird.scientific_name}}</h5>
-                <p>Habitat: {{bird.habitat}}</p>
+                <p>Habitat: {{bird.habitat_desc}}</p>
                 <p>Diet: {{bird.diet}}</p>
                 <p>Local status: {{bird.abundance}} {{bird.status}}</p>
                 <p>{{bird.description}}</p>
@@ -15,6 +15,10 @@ Vue.component('app-bird',{
             <div class="tape tape-top"></div>
             <div class="tape tape-bottom"></div>
             <img :src="[bird.image=='default.jpg' ? './images/'+bird.image : bird.image]">
+            </div>
+            <div class="bird-nav">
+                <button class="prev" @click="location.href='./#/birds/'+(+bird.index-1)" v-if="birds[$route.params.id-2]">\< {{birds[$route.params.id-2].common_name}}</button>
+                <button class="next" @click="location.href='./#/birds/'+(+bird.index+1)" v-if="birds[$route.params.id]">{{birds[$route.params.id].common_name}} \></button>
             </div>
         </div>
         
