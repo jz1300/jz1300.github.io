@@ -3,15 +3,27 @@ Vue.component('app-bird-panel', {
   
     <div class="birds-panel">
         <div class="birds-panel-header">
-        <h1>Birds of singapore</h1>
+        <div>
+            <div class="habitat-select">
+                    <span class="habitat">Habitat</span>
+                    <select v-model="selected_h" @change="load()">
+                            <option selected></option>
+                            <option v-for="h in habitats" v-if="h" :value="h">
+                            {{h.replace('_', " ")}}
+                            </option>
+                    </select>
+            </div>
+        </div>
+            <p>{{count}} results</p>
         <div class="search">
+            
             <input type="text" v-model="search" @keyup="load($event)" placeholder="Search">
         </div>
         </div>
         <div class="birds-panel-content">
             
             <div class="birds-grid">
-                <div class="card" v-for="b in birds" v-if="b" @click="location.href='./#/birds/'+b.index">
+                <div class="card" v-for="b in birds" v-if="b" @click="selected_bird=b;birdSelected=true">
                 
                     <img :src="[b.image=='default.jpg' ? './images/'+b.image : b.image]">
                     <p>{{b.scientific_name}}</p>
@@ -27,6 +39,23 @@ Vue.component('app-bird-panel', {
                 </div>
             </div>
         </div>
+        <div class="selected_bird" v-if="birdSelected" @click.self="birdSelected=false">
+            <div class="bird">
+                <img :src="[selected_bird.image=='default.jpg' ? './images/'+selected_bird.image : selected_bird.image]">
+                <div class="bird-content">
+                    <p>{{selected_bird.scientific_name}}</p>
+                    <h1>{{selected_bird.common_name}}</h1>
+                    <br>
+                    <p><span class="habitat">Habitat</span> {{selected_bird.habitat_desc}}</p>
+                    <br>
+                    <p><span class="diet">Diet</span> {{selected_bird.diet}}</p>
+                    <br>
+                    <p><span class="local-status">Local status</span> {{selected_bird.abundance}} {{selected_bird.status}}</p>
+                    <br><br>
+                    <p>{{selected_bird.description}}</p>
+                </div>
+            </div>
+        </div>
     </div>
     `,
     data(){
@@ -35,7 +64,13 @@ Vue.component('app-bird-panel', {
             families:[],
             family:'',
             birds,
+            habitats,
             orders:[],
+            selected_h:"",
+            selected_bird:{},
+            birdSelected:false,
+            count:0,
+
         }
     },
     methods:{
@@ -71,17 +106,30 @@ Vue.component('app-bird-panel', {
             this.load();
         },
         load(e){
-           console.log(this.family);
+           //console.log(this.family);
+            this.count = 0
             this.birds = birds.map(b=>{
-                if(b.common_name.toLowerCase().includes(this.search) || b.scientific_name.toLowerCase().includes(this.search)){
-                    
-                    if(b.family.includes(this.family)){
-                        return b;
+                if(this.selected_h==""){
+                    if(b.common_name.toLowerCase().includes(this.search) || b.scientific_name.toLowerCase().includes(this.search)){
+                        
+                        if(b.family.includes(this.family)){
+                            this.count++
+                            return b;
 
+                        }
                     }
                 }
+                else if(b.habitat.includes(this.selected_h))
+                    if(b.common_name.toLowerCase().includes(this.search) || b.scientific_name.toLowerCase().includes(this.search)){
+                        
+                        if(b.family.includes(this.family)){
+                            this.count++
+                            return b;
+                        }
+                    }
             })
-
+            
+            
         }
     },
     mounted(){
@@ -89,18 +137,18 @@ Vue.component('app-bird-panel', {
         let o = new Set
         let orders = []
         let families = []
-        console.log(birds);
+        //console.log(birds);
         for(let i =0;i<birds.length;i++){
-            console.log(birds[i]);
+       //     console.log(birds[i]);
         }
         birds.forEach(b=>{
-            console.log(b)
+           // console.log(b)
             f.add(b.family+","+b.order)
             o.add(b.order)
             
            
         })
-       
+        this.count = birds.length
         families = Array.from(f)
         families = families.map(f=>{
             return {f:f.split(',')[0],clicked:false, o:f.split(',')[1]};
@@ -116,7 +164,7 @@ Vue.component('app-bird-panel', {
         })
         orders.forEach(o=>{
             families.forEach(f=>{
-                console.log(f.f,o.o);
+             //   console.log(f.f,o.o);
                 if(f.o == o.o){
                     o.f.push(f);
                 }
